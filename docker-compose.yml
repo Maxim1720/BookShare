@@ -1,0 +1,29 @@
+version: "2.2"
+services:
+  web:
+    build: .
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/BookGo
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create
+      - SPRING.MAIL.HOST=smtp.host.ru
+      - SPRING.MAIL.USERNAME=user
+      - SPRING.MAIL.PASSWORD=pass
+      - SPRING.MAIL.PORT=465
+      - SPRING.MAIL.PROTOCOL=smtps
+      - SPRING.HOST=http://www.book.go/
+  postgres:
+    image: "postgres:11"
+    #Рабочая версия с портом 443
+    ports:
+      - "443:5432"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "BookGo"
